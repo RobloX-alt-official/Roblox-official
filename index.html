@@ -3,42 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roblox Admin Login</title>
+
+<!-- WEBSITE TITLE -->
+<title>Roblox</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     background:#0f0f0f;
     color:white;
 }
 
+/* NAVBAR */
+
+.navbar{
+    width:100%;
+    background:#1e1e1e;
+    padding:15px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+.navbar button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    background:#0078ff;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.navbar button:hover{
+    background:#005fd1;
+}
+
+/* PAGES */
+
+.section{
+    display:none;
+    text-align:center;
+    padding:40px;
+}
+
+.active{
+    display:block;
+}
+
+/* BOX */
+
 .container{
+    width:360px;
+    margin:auto;
+    margin-top:40px;
     background:#1e1e1e;
     padding:30px;
     border-radius:12px;
-    width:360px;
-    text-align:center;
     box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
+
+/* LOGO */
 
 .logo{
     width:180px;
     margin-bottom:20px;
 }
 
-h1{
-    margin-bottom:20px;
-}
+/* INPUTS */
 
 input{
     width:100%;
@@ -51,10 +92,11 @@ input{
     font-size:16px;
 }
 
-button{
+/* BUTTONS */
+
+.main-btn{
     width:100%;
     padding:12px;
-    margin-top:10px;
     border:none;
     border-radius:8px;
     background:#0078ff;
@@ -64,163 +106,378 @@ button{
     transition:0.3s;
 }
 
-button:hover{
+.main-btn:hover{
     background:#005fd1;
 }
+
+/* PANELS */
 
 #adminPanel{
     display:none;
 }
 
+/* COMMANDS */
+
 .command-list{
     margin-top:20px;
-    text-align:left;
     background:#2a2a2a;
     padding:15px;
     border-radius:8px;
+    text-align:left;
 }
 
 .command-list p{
     margin:5px 0;
 }
 
+/* SAVED DATA */
+
 .saved-data{
     margin-top:20px;
-    text-align:left;
     background:#2a2a2a;
     padding:15px;
     border-radius:8px;
+    text-align:left;
 }
+
+/* TEXT */
 
 #message{
     margin-top:15px;
-    color:#ff4d4d;
+    color:red;
 }
 
 #result{
     margin-top:15px;
     color:#00ff99;
 }
+
+.home-text{
+    margin-top:20px;
+    font-size:20px;
+}
+
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="container" id="loginBox">
+<!-- NAVBAR -->
 
-    <img 
-    class="logo"
-    src="https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png?_=20211127162044"
-    alt="Roblox Logo">
+<div class="navbar">
 
-    <h1>Login</h1>
+    <button onclick="showHome()">
+        Home
+    </button>
 
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
+    <button onclick="showLogin()">
+        Login
+    </button>
 
-    <button onclick="login()">Log In</button>
-
-    <p id="message"></p>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="container" id="adminPanel">
+<!-- HOME PAGE -->
 
-    <img 
+<div id="homePage" class="section active">
+
+    <img
     class="logo"
-    src="https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png?_=20211127162044"
-    alt="Roblox Logo">
+    src="https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png">
 
-    <h1>Admin Panel</h1>
+    <h1>Roblox</h1>
 
-    <p>Welcome Admin!</p>
+    <p class="home-text">
+        Welcome to Roblox Website
+    </p>
 
-    <input type="text" id="commandInput" placeholder="Enter command">
+</div>
 
-    <button onclick="runCommand()">Run Command</button>
+<!-- LOGIN PAGE -->
 
-    <div class="command-list">
-        <h3>Available Commands</h3>
-        <p>kick</p>
-        <p>ban</p>
-        <p>shutdown</p>
+<div id="loginPage" class="section">
+
+    <!-- LOGIN BOX -->
+
+    <div class="container" id="loginBox">
+
+        <img
+        class="logo"
+        src="https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png">
+
+        <h1>Login</h1>
+
+        <input
+        type="text"
+        id="username"
+        placeholder="Username">
+
+        <input
+        type="password"
+        id="password"
+        placeholder="Password">
+
+        <button
+        class="main-btn"
+        onclick="login()">
+        Log In
+        </button>
+
+        <p id="message"></p>
+
     </div>
 
-    <div class="saved-data">
-        <h3>Saved Login Data</h3>
-        <p id="savedUser"></p>
-        <p id="savedPass"></p>
-    </div>
+    <!-- ADMIN PANEL -->
 
-    <p id="result"></p>
+    <div class="container" id="adminPanel">
+
+        <img
+        class="logo"
+        src="https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png">
+
+        <h1 id="welcomeText">
+            Welcome Admin
+        </h1>
+
+        <p style="margin-bottom:20px;">
+            Roblox Admin System
+        </p>
+
+        <input
+        type="text"
+        id="commandInput"
+        placeholder="Enter command">
+
+        <button
+        class="main-btn"
+        onclick="runCommand()">
+        Run Command
+        </button>
+
+        <!-- COMMANDS -->
+
+        <div class="command-list">
+
+            <h3>Available Commands</h3>
+
+            <p>kick</p>
+
+            <p>ban</p>
+
+            <p>shutdown</p>
+
+        </div>
+
+        <!-- SAVED LOGIN -->
+
+        <div class="saved-data">
+
+            <h3>Saved Login Data</h3>
+
+            <p id="savedUser"></p>
+
+            <p id="savedPass"></p>
+
+        </div>
+
+        <p id="result"></p>
+
+    </div>
 
 </div>
 
 <script>
 
-// Load Saved Data
+/* PAGE SYSTEM */
+
+function showHome(){
+
+    document
+    .getElementById("homePage")
+    .classList.add("active");
+
+    document
+    .getElementById("loginPage")
+    .classList.remove("active");
+}
+
+function showLogin(){
+
+    document
+    .getElementById("loginPage")
+    .classList.add("active");
+
+    document
+    .getElementById("homePage")
+    .classList.remove("active");
+}
+
+/* LOAD SAVED DATA */
+
 window.onload = function(){
 
-    const savedUser = localStorage.getItem("savedUsername");
-    const savedPass = localStorage.getItem("savedPassword");
+    const savedUser =
+    localStorage.getItem("savedUsername");
+
+    const savedPass =
+    localStorage.getItem("savedPassword");
 
     if(savedUser){
-        document.getElementById("savedUser").innerText =
+
+        document
+        .getElementById("savedUser")
+        .innerText =
         "Username: " + savedUser;
     }
 
     if(savedPass){
-        document.getElementById("savedPass").innerText =
+
+        document
+        .getElementById("savedPass")
+        .innerText =
         "Password: " + savedPass;
     }
 };
 
-// Login System
+/* LOGIN SYSTEM */
+
 function login(){
 
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
+    const user =
+    document.getElementById("username").value;
 
-    // Save Data To Local Storage
-    localStorage.setItem("savedUsername", user);
-    localStorage.setItem("savedPassword", pass);
+    const pass =
+    document.getElementById("password").value;
 
-    // Admin Login
+    /* SAVE TO LOCAL STORAGE */
+
+    localStorage.setItem(
+        "savedUsername",
+        user
+    );
+
+    localStorage.setItem(
+        "savedPassword",
+        pass
+    );
+
+    /* ADMIN ACCESS */
+
     if(user === "naman" && pass === "naman"){
 
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
+        /* HIDE LOGIN */
 
-        document.getElementById("savedUser").innerText =
+        document
+        .getElementById("loginBox")
+        .style.display = "none";
+
+        /* SHOW ADMIN PANEL */
+
+        document
+        .getElementById("adminPanel")
+        .style.display = "block";
+
+        /* ADMIN MESSAGE */
+
+        document
+        .getElementById("welcomeText")
+        .innerText =
+        "Welcome Admin Naman";
+
+        /* SHOW SAVED DATA */
+
+        document
+        .getElementById("savedUser")
+        .innerText =
         "Username: " + user;
 
-        document.getElementById("savedPass").innerText =
+        document
+        .getElementById("savedPass")
+        .innerText =
         "Password: " + pass;
 
-    } else {
+    }else{
 
-        document.getElementById("message").innerText =
+        document
+        .getElementById("message")
+        .innerText =
         "Invalid Username or Password";
     }
 }
 
-// Command System
+/* COMMAND SYSTEM */
+
 function runCommand(){
 
-    const cmd = document.getElementById("commandInput").value.toLowerCase();
-    const result = document.getElementById("result");
+    const cmd =
+    document
+    .getElementById("commandInput")
+    .value
+    .toLowerCase();
+
+    const result =
+    document
+    .getElementById("result");
+
+    /* KICK */
 
     if(cmd === "kick"){
-        result.innerText = "Player kicked successfully!";
+
+        result.innerText =
+        "Player kicked successfully!";
     }
+
+    /* BAN */
+
     else if(cmd === "ban"){
-        result.innerText = "Player banned successfully!";
+
+        result.innerText =
+        "Player banned successfully!";
     }
+
+    /* SHUTDOWN */
+
     else if(cmd === "shutdown"){
-        result.innerText = "Server shutting down...";
+
+        document.body.innerHTML = `
+
+        <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+        background:black;
+        color:red;
+        font-size:40px;
+        font-family:Arial;
+        ">
+
+        WEBSITE SHUTDOWN
+
+        <p style="
+        margin-top:20px;
+        font-size:20px;
+        color:white;
+        ">
+        Closing Website...
+        </p>
+
+        </div>
+
+        `;
+
+        setTimeout(() => {
+
+            window.close();
+
+        }, 3000);
     }
+
+    /* UNKNOWN */
+
     else{
-        result.innerText = "Unknown command!";
+
+        result.innerText =
+        "Unknown command!";
     }
 }
 
