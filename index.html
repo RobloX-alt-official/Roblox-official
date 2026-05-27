@@ -33,31 +33,50 @@ body{
 
 /* NAVBAR */
 
-.navbar{
+<div class="navbar">
 
-    width:100%;
+    <div class="nav-left">
 
-    height:52px;
+        <div class="menu-icon">
 
-    background:#191b1f;
+            ☰
 
-    position:fixed;
+        </div>
 
-    top:0;
-    left:0;
+        <img
+        class="logo-nav"
+        src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Roblox_Logo_2022.jpg">
 
-    display:flex;
+        <div class="nav-links">
 
-    justify-content:space-between;
+            <a href="#">Charts</a>
 
-    align-items:center;
+            <a href="#">Marketplace</a>
 
-    padding:0 16px;
+            <a href="#">Create</a>
 
-    border-bottom:1px solid #2d3138;
+            <a href="#">Robux</a>
 
-    z-index:999;
-}
+        </div>
+
+    </div>
+
+    <div class="nav-right">
+
+        <input
+        type="text"
+        class="search-bar"
+        placeholder="Search">
+
+        <button class="signup-btn">
+
+            Sign Up
+
+        </button>
+
+    </div>
+
+</div>
 
 .nav-left{
 
@@ -446,6 +465,8 @@ body{
 
     /* NAV LINKS */
 
+/* NAV LINKS */
+
 .nav-links{
 
     display:flex;
@@ -464,8 +485,6 @@ body{
 
     font-size:15px;
 
-    transition:0.2s;
-
 }
 
 .nav-links a:hover{
@@ -474,7 +493,7 @@ body{
 
 }
 
-/* RIGHT NAV */
+/* RIGHT SIDE */
 
 .nav-right{
 
@@ -486,6 +505,31 @@ body{
 
 }
 
+/* SEARCH BAR */
+
+.search-bar{
+
+    width:180px;
+
+    padding:9px 14px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#2a2f3a;
+
+    color:white;
+
+    outline:none;
+
+}
+
+.search-bar::placeholder{
+
+    color:#aaa;
+
+}
 /* SEARCH BAR */
 
 .search-bar{
